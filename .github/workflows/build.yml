@@ -33,8 +33,14 @@ jobs:
         pip install pyinstaller
 
     - name: Build with PyInstaller
+      if: runner.os != 'Windows'
       run: |
         pyinstaller Audio_Transcriptor.spec
+
+    - name: Build Windows App
+      if: runner.os == 'Windows'
+      run: |
+        pyinstaller --noconfirm --clean Audio_Transcriptor.spec
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
