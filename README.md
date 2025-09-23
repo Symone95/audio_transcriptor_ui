@@ -13,7 +13,7 @@ Supporta vari formati audio (`.mp3`, `.wav`, `.m4a`, `.mp4`, `.flac`).
 - Visualizzazione del testo trascritto in tempo reale  
 - Salvataggio automatico in `trascrizione.txt`  
 - Pulsante **Stop** per interrompere la trascrizione  
-- Possibilità di selezionare e trascrivere più file senza riavviare l’app  
+- Possibilità di selezionare e trascrivere più file senza riavviare l’app
 
 ---
 
@@ -24,3 +24,16 @@ Supporta vari formati audio (`.mp3`, `.wav`, `.m4a`, `.mp4`, `.flac`).
 
 ```bash
 pip install kivy pydub openai-whisper
+```
+
+## 🛠️ Buildare il progetto
+Per buildare da zero il progetto lanciare il seguente script Python, creerà le cartelle `/build` e `/dist` e il file `.spec` nella root
+```bash
+python build.py
+```
+
+## 🛠️ Compilare il progetto manualmente
+Per ricompilare il progetto lanciare il comando seguente, aggiornerà l'eseguibile sotto la cartella `./dist`
+```bash
+pyinstaller Audio_Transcriptor.spec
+```
