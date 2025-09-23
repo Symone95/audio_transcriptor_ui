@@ -8,7 +8,11 @@ on:
 jobs:
   build:
     timeout-minutes: 60
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-2022 ]
+        #os: [ubuntu-latest, windows-2022, macos-latest]
 
     steps:
     - name: Checkout repository
