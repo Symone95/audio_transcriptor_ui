@@ -29,7 +29,7 @@ jobs:
 
     - name: Build with PyInstaller
       run: |
-        pyinstaller main.spec
+        pyinstaller Audio_Transcriptor.spec
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
