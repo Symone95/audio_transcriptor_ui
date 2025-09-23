@@ -23,15 +23,26 @@ jobs:
         python-version: '3.10'
 
     # Windows
-    - name: Install dependencies on Windows
+    - name: Upgrade pip, wheel, setuptools
       if: runner.os == 'Windows'
-      run: |
-        python -m pip install --upgrade pip wheel setuptools
-        pip install "kivy[base]" kivy_deps.glew kivy_deps.sdl2 kivy_deps.angle --progress-bar off
-        pip install -r requirements.txt
-        pip install pyinstaller
+      run: python -m pip install --upgrade pip wheel setuptools
 
-    # Linux/macOS
+    - name: Install Kivy dependencies
+      if: runner.os == 'Windows'
+      run: pip install "kivy[base]" kivy_deps.glew kivy_deps.sdl2 kivy_deps.angle --progress-bar off
+
+    - name: Install remaining requirements
+      if: runner.os == 'Windows'
+      run:
+        "pip install --only-binary=:all: -r requirements.txt"
+
+    - name: Install PyInstaller
+      if: runner.os == 'Windows'
+      run: pip install pyinstaller
+
+
+
+      # Linux/macOS
     - name: Install dependencies on Linux/macOS
       if: runner.os != 'Windows'
       run: |
