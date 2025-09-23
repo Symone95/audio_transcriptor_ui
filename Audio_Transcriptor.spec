@@ -1,12 +1,18 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import os
+import whisper  # importa il pacchetto per trovare la cartella assets
+
+# path dinamico alla cartella "assets" di whisper
+whisper_assets = os.path.join(os.path.dirname(whisper.__file__), "assets")
 
 a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('icons/logo.icns', '.'), ('.venv/lib/python3.9/site-packages/whisper/assets/', 'whisper/assets')
-],
+    datas=[('icons/logo.icns', '.'),
+           (whisper_assets, 'whisper/assets')
+    ],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
