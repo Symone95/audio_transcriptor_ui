@@ -18,11 +18,9 @@ if sys.platform.startswith("win"):
     import kivy_deps.sdl2 as sdl2
     import kivy_deps.glew as glew
     import kivy_deps.angle as angle
-    binaries = [
-        *sdl2.dep_bins,
-        *glew.dep_bins,
-        *angle.dep_bins,   # occhio: è dep_bins, non includes
-    ]
+    binaries += sdl2.dep_bins
+    binaries += glew.dep_bins
+    binaries += angle.dep_bins
 
 a = Analysis(
     ['main.py'],
