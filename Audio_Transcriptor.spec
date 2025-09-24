@@ -1,8 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 import os
 import sys
-from kivy_deps import sdl2, glew
-from kivy_deps.angle import includes as angle_includes
 import whisper  # importa il pacchetto per trovare la cartella assets
 
 # path dinamico alla cartella "assets" di whisper
