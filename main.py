@@ -117,7 +117,8 @@ class Trascrittore(BoxLayout):
         chunk_size_ms = 60 * 1000  # 60 secondi
         num_chunks = math.ceil(len(audio) / chunk_size_ms)
 
-        output_path = "trascrizione.txt"
+        file_name = self.file_path.split("/")[-1]
+        output_path = f"trascrizione_{file_name}.txt"
         with open(output_path, "w", encoding="utf-8") as f:
             for i in range(num_chunks):
                 if self.stop_flag:  # fermo subito
