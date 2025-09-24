@@ -43,6 +43,7 @@ jobs:
         pyinstaller --noconfirm --clean Audio_Transcriptor.spec
 
     - name: Upload artifact
+      if: runner.os == 'macOS'
       uses: actions/upload-artifact@v4
       with:
         name: Audio_Transcriptor-macos
