@@ -21,6 +21,13 @@ if sys.platform.startswith("win"):
 from kivy.app import App
 from kivy.uix.label import Label
 
+import sys
+
+# 🔧 Patch per evitare problemi con logging su stderr in PyInstaller
+if sys.stderr is None:
+    import io
+    sys.stderr = io.StringIO()
+
 
 # Imposto dimensioni base finestra
 Window.size = (800, 600)
