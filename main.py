@@ -1,7 +1,27 @@
+# --- PATCH per stdout/stderr quando si usa PyInstaller con --noconsole ---
+import sys
+import os
+
+if getattr(sys, 'frozen', False):  # Solo se eseguibile
+    log_path = os.path.join(os.path.dirname(sys.executable), 'app.log')
+    sys.stdout = open(log_path, 'a', buffering=1, encoding='utf-8')
+    sys.stderr = sys.stdout  # Anche gli errori vanno lì
+# -------------------------------------------------------------------------
+
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
+logging.info("Avvio applicazione")
+
 import threading
 import math
-import os
-import sys
 from pydub import AudioSegment
 import whisper
 
@@ -20,8 +40,6 @@ if sys.platform.startswith("win"):
 # Ora puoi importare Kivy
 from kivy.app import App
 from kivy.uix.label import Label
-
-import sys
 
 # 🔧 Patch per evitare problemi con logging su stderr in PyInstaller
 if sys.stderr is None:
