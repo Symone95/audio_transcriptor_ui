@@ -46,17 +46,6 @@ if sys.stderr is None:
     import io
     sys.stderr = io.StringIO()
 
-
-# Imposto dimensioni base finestra
-Window.size = (800, 600)
-
-if sys.platform == "darwin":
-    Window.set_icon("icons/logo.icns")
-elif sys.platform.startswith("win"):
-    Window.set_icon("icons/logo.ico")
-else:
-    Window.set_icon("icons/logo.png")
-
 # Carico modello Whisper una sola volta
 model = whisper.load_model("small")  # puoi provare "base", "medium", "large"
 
@@ -197,6 +186,15 @@ class Trascrittore(BoxLayout):
 
 class TrascrittoreApp(App):
     def build(self):
+        Window.size = (800, 600)
+
+        if sys.platform == "darwin":
+            Window.set_icon("icons/logo.icns")
+        elif sys.platform.startswith("win"):
+            Window.set_icon("icons/logo.ico")
+        else:
+            Window.set_icon("icons/logo.png")
+
         return Trascrittore()
 
 
