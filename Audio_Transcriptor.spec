@@ -11,13 +11,14 @@ datas = [
     ('icons/logo.icns', '.'),
     (whisper_assets, 'whisper/assets')
 ]
+binaries = []
 
 # aggiungi solo su Windows le dipendenze di Kivy
 if sys.platform.startswith("win"):
     import kivy_deps.sdl2 as sdl2
     import kivy_deps.glew as glew
     import kivy_deps.angle as angle
-    datas += [
+    binaries = [
         *sdl2.dep_bins,
         *glew.dep_bins,
         *angle.dep_bins,   # occhio: è dep_bins, non includes
@@ -26,7 +27,7 @@ if sys.platform.startswith("win"):
 a = Analysis(
     ['main.py'],
     pathex=[],
-    binaries=[],
+    binaries=binaries,
     datas=datas,
     hiddenimports=[],
     hookspath=[],
