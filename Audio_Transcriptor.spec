@@ -1,6 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
-
 import os
+import sys
 from kivy_deps import sdl2, glew
 from kivy_deps.angle import includes as angle_includes
 import whisper  # importa il pacchetto per trovare la cartella assets
@@ -8,16 +8,28 @@ import whisper  # importa il pacchetto per trovare la cartella assets
 # path dinamico alla cartella "assets" di whisper
 whisper_assets = os.path.join(os.path.dirname(whisper.__file__), "assets")
 
+# base datas (comuni a tutti i sistemi)
+datas = [
+    ('icons/logo.icns', '.'),
+    (whisper_assets, 'whisper/assets')
+]
+
+# aggiungi solo su Windows le dipendenze di Kivy
+if sys.platform.startswith("win"):
+    import kivy_deps.sdl2 as sdl2
+    import kivy_deps.glew as glew
+    import kivy_deps.angle as angle
+    datas += [
+        *sdl2.dep_bins,
+        *glew.dep_bins,
+        *angle.dep_bins,   # occhio: è dep_bins, non includes
+    ]
+
 a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('icons/logo.icns', '.'),
-           (whisper_assets, 'whisper/assets'),
-            *sdl2.dep_bins,
-            *glew.dep_bins,
-            *angle_includes,
-    ],
+    datas=datas,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
