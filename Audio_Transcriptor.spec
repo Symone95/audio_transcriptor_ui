@@ -1,6 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 import os
+from kivy_deps import sdl2, glew
+from kivy_deps.angle import includes as angle_includes
 import whisper  # importa il pacchetto per trovare la cartella assets
 
 # path dinamico alla cartella "assets" di whisper
@@ -11,7 +13,10 @@ a = Analysis(
     pathex=[],
     binaries=[],
     datas=[('icons/logo.icns', '.'),
-           (whisper_assets, 'whisper/assets')
+           (whisper_assets, 'whisper/assets'),
+            *sdl2.dep_bins,
+            *glew.dep_bins,
+            *angle_includes,
     ],
     hiddenimports=[],
     hookspath=[],
