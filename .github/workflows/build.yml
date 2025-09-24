@@ -31,6 +31,11 @@ jobs:
         pip install -r requirements.txt
         pip install pyinstaller
 
+    - name: Install Windows dependencies
+      if: runner.os == 'Windows'
+      run: |
+        pip install kivy-deps.sdl2 kivy_deps.glew kivy_deps.angle
+
     - name: Build with PyInstaller (Mac/Linux)
       if: runner.os != 'Windows'
       run: |
