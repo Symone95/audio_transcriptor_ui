@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         os: [ macos-latest, windows-2022 ]
-        #os: [ubuntu-latest, windows-2022, macos-latest]
 
     steps:
     - name: Checkout repository
@@ -32,19 +31,26 @@ jobs:
         pip install -r requirements.txt
         pip install pyinstaller
 
-    - name: Build with PyInstaller
+    - name: Build with PyInstaller (Mac/Linux)
       if: runner.os != 'Windows'
       run: |
         pyinstaller Audio_Transcriptor.spec
 
-    - name: Build Windows App
+    - name: Build with PyInstaller (Windows)
       if: runner.os == 'Windows'
       run: |
         pyinstaller --noconfirm --clean Audio_Transcriptor.spec
 
-    - name: Upload artifact
+    - name: Upload macOS artifact
       if: runner.os == 'macOS'
       uses: actions/upload-artifact@v4
       with:
         name: Audio_Transcriptor-macos
+        path: dist/
+
+    - name: Upload Windows artifact
+      if: runner.os == 'Windows'
+      uses: actions/upload-artifact@v4
+      with:
+        name: Audio_Transcriptor-windows
         path: dist/
