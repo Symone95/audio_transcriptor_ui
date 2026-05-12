@@ -1,44 +1,33 @@
-template:
-  procedure_name: "vlan_trunk_mode"
-  name: "Inserimento/Aggiornamento VLAN TRUNK MODE - CISCO"
-  description: "Questa procedura inserisce una nuova VLAN e/o aggiorna la description in trunk mode per apparati Cisco."
-
-  read_only: false
-  need_ise: true
-
-  req_procedure:
-    - name: intf_info_ipf
-
-  req_inputs:
-    - name: ip
-      description: "IP del dispositivo Cisco ottenuto da SDB"
-    - name: vlan_id
-      description: "ID della VLAN da creare o aggiornare"
-    - name: description
-      description: "Nome della descrizione da dare alla VLAN"
-    - name: interface
-      description: "Interfaccia trunk, ottenuta dalla procedura intf_info_ipf"
+---
+- name: "Esempio di configurazione via SSH"
+  hosts: all
+  gather_facts: no
+  
+  # TODO 4: Queste sono le variabili che il tuo parser dovrà trovare
+  vars:
+    app_port: 8080
+    app_user: "deploy_user"
+    working_dir: "/var/www/my_app"
+    db_name: "production_db"
+    # Esempio di input richiesto (spesso lasciato vuoto o con placeholder)
+    target_environment: "staging" 
 
   tasks:
-    - name: pre_op_check_ssh
-      type: ssh_commands
-      commands:
-        - show running-config vlan
-        - show vlan brief
+    - name: "Verifica connettività e versione OS"
+      ansible.builtin.shell: "uname -a"
+      register: system_info
 
-    - name: config_vlan
-      type: ssh_conf_commands
-      commands:
-        - vlan {{ vlan_id }}
-        - name {{ description }}
-        - exit
-        - interface {{ interface }}
-        - switchport mode trunk
-        - switchport trunk allowed vlan add {{ vlan_id }}
-        - exit
+    - name: "Crea la directory di lavoro se non esiste"
+      ansible.builtin.file:
+        path: "{{ working_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        mode: '0755'
 
-    - name: post_op_check_ssh
-      type: ssh_commands
-      commands:
-        - show running-config vlan
-        - show vlan brief
+    - name: "Esegue un comando custom usando le vars"
+      ansible.builtin.shell: "echo 'Avvio app su porta {{ app_port }} in {{ target_environment }}'"
+      register: command_output
+
+    - name: "Mostra il risultato a video"
+      ansible.builtin.debug:
+        msg: "Il server ha risposto: {{ system_info.stdout }}"
