@@ -1,5 +1,5 @@
 ---
-- name: "Esempio di configurazione via SSH"
+- name: "Esempio di configurazione via SSH nuovo"
   hosts: all
   gather_facts: no
   
