@@ -1,8 +1,8 @@
 ---
 - name: "Esempio di configurazione via SSH nuovo"
   hosts: all
-  gather_facts: no
-  
+  gather_facts: false
+
   # TODO 4: Queste sono le variabili che il tuo parser dovrà trovare
   vars:
     app_port: 8080
@@ -10,7 +10,7 @@
     working_dir: "/var/www/my_app"
     db_name: "production_db"
     # Esempio di input richiesto (spesso lasciato vuoto o con placeholder)
-    target_environment: "staging" 
+    target_environment: "staging"
 
   tasks:
     - name: "Verifica connettività e versione OS"
