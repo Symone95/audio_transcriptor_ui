@@ -3,6 +3,16 @@
   hosts: all
   gather_facts: false
 
+  vars_prompt:
+    - name: "DEVICE_TYPE"
+      prompt: "Inserisci il tipo di dispositivo (es: router, switch)"
+      private: false
+      default: "generic"
+
+    - name: "target_environment"
+      prompt: "Inserisci l'ambiente di destinazione"
+      private: false
+
   # TODO 4: Queste sono le variabili che il tuo parser dovrà trovare
   vars:
     app_port: 8080
