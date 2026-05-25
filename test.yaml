@@ -41,3 +41,38 @@
     - name: "Mostra il risultato a video"
       ansible.builtin.debug:
         msg: "Il server ha risposto: {{ system_info.stdout }}"
+---
+# SECONDO PLAY: Preparazione
+- name: "Setup del sistema di controllo"
+  hosts: localhost
+  gather_facts: false
+  
+  vars_prompt:
+    - name: "DEPLOY_TOKEN"
+      prompt: "Inserisci il token di sicurezza per il deploy"
+      private: true
+
+  tasks:
+    - name: "Verifica variabili locali"
+      ansible.builtin.debug:
+        msg: "Setup in corso..."
+
+# TERZO PLAY: Esecuzione
+- name: "Configurazione nodi target"
+  hosts: all
+  gather_facts: true
+
+  vars_prompt:
+    - name: "target_environment"
+      prompt: "Inserisci l'ambiente di destinazione"
+      private: false
+
+  vars:
+    working_dir: "/var/www/app"
+    app_port: 8080
+
+  tasks:
+    - name: "Creazione directory"
+      ansible.builtin.file:
+        path: "{{ working_dir }}"
+        state: directory
