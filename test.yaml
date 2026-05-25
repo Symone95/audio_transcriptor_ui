@@ -41,7 +41,7 @@
     - name: "Mostra il risultato a video"
       ansible.builtin.debug:
         msg: "Il server ha risposto: {{ system_info.stdout }}"
----
+
 # SECONDO PLAY: Preparazione
 - name: "Setup del sistema di controllo"
   hosts: localhost
